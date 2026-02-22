@@ -2,276 +2,171 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
+  <title>Copernix OS · NeuroEduLabs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Copernix OS · Edge AI dla dzieci ze SPE</title>
   <link rel="icon" type="image/png" href="https://neuroedulabs.onrender.com/favicon.png">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@400;600;700&display=swap');
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       background: radial-gradient(circle at top left, rgba(56,189,248,0.14) 0, transparent 55%),
-      radial-gradient(circle at bottom right, rgba(139,92,246,0.18) 0, transparent 55%),
-      #060b14;
-      color: #e2e8f0;
-      font-family: 'Rajdhani', sans-serif;
-      min-height: 100vh;
+                  radial-gradient(circle at bottom right, rgba(236,72,153,0.14) 0, transparent 55%),
+                  #020617;
+      color:#e5e7eb; font-family:'Rajdhani',sans-serif; min-height:100vh; overflow-x: hidden;
     }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 2rem;
-      border-bottom: 1px solid rgba(56,189,248,0.15);
-      backdrop-filter: blur(8px);
+    .shell { max-width:1200px; margin:0 auto; padding:32px 16px 48px; }
+    header { display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap:16px; margin-bottom:40px; border-bottom: 1px solid rgba(56,189,248,0.15); padding-bottom: 15px;}
+    .logo-main {
+      font-family:'Orbitron',sans-serif; font-size:1.6rem; letter-spacing:0.2em; text-transform:uppercase;
+      background:linear-gradient(135deg,#06b6d4,#a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     }
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.1rem;
-      color: #38bdf8;
-      letter-spacing: 2px;
-    }
-    .badge {
-      background: rgba(56,189,248,0.12);
-      border: 1px solid #38bdf8;
-      color: #38bdf8;
-      padding: .25rem .75rem;
-      border-radius: 99px;
-      font-size: .75rem;
-      letter-spacing: 1px;
-    }
-    .hero {
-      display: block;
-      text-align: center;
-      padding: 6rem 1.5rem 4rem;
-    }
-    .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(2rem, 6vw, 3.6rem);
-      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.15;
-      margin-bottom: 1.2rem;
-    }
-    .hero p {
-      max-width: 640px;
-      margin: 0 auto 2.5rem;
-      font-size: 1.15rem;
-      color: #94a3b8;
-      line-height: 1.7;
-    }
-    .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      padding: .75rem 2rem;
-      border-radius: 8px;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 1px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all .25s;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #38bdf8, #818cf8);
-      color: #060b14;
-      border: none;
-    }
-    .btn-primary:hover { opacity: .85; transform: translateY(-2px); }
-    .btn-outline {
-      background: transparent;
-      border: 1px solid #38bdf8;
-      color: #38bdf8;
-    }
-    .btn-outline:hover { background: rgba(56,189,248,0.1); transform: translateY(-2px); }
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      padding: 2.5rem 1.5rem;
-      border-top: 1px solid rgba(56,189,248,0.1);
-      border-bottom: 1px solid rgba(56,189,248,0.1);
-    }
-    .stat { text-align: center; }
-    .stat-value {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      color: #38bdf8;
-    }
-    .stat-label { font-size: .85rem; color: #64748b; margin-top: .2rem; letter-spacing: 1px; }
-    .features {
-      max-width: 1100px;
-      margin: 4rem auto;
-      padding: 0 1.5rem;
-    }
-    .features h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.4rem;
-      color: #818cf8;
-      text-align: center;
-      margin-bottom: 2.5rem;
-      letter-spacing: 2px;
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    .card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(56,189,248,0.15);
-      border-radius: 12px;
-      padding: 1.75rem;
-      transition: border-color .3s;
-    }
-    .card:hover { border-color: rgba(56,189,248,0.45); }
-    .card-icon { font-size: 1.8rem; margin-bottom: 1rem; }
-    .card h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: .9rem;
-      color: #38bdf8;
-      margin-bottom: .6rem;
-      letter-spacing: 1px;
-    }
-    .card p { font-size: .95rem; color: #94a3b8; line-height: 1.6; }
-    .trl-bar {
-      max-width: 700px;
-      margin: 0 auto 4rem;
-      padding: 0 1.5rem;
-      text-align: center;
-    }
-    .trl-bar h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      color: #c084fc;
-      letter-spacing: 2px;
-      margin-bottom: 1.5rem;
-    }
-    .trl-track {
-      display: flex;
-      gap: 4px;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .trl-step {
-      flex: 1;
-      border-radius: 4px 4px 0 0;
-      background: rgba(255,255,255,0.06);
-      position: relative;
-      transition: background .3s;
-    }
-    .trl-step.active { background: linear-gradient(180deg, #38bdf8, #818cf8); }
-    .trl-step.current { background: linear-gradient(180deg, #f472b6, #c084fc); box-shadow: 0 0 20px rgba(196,84,252,0.5); }
-    .trl-step span {
-      display: block;
-      text-align: center;
-      font-size: .7rem;
-      font-family: 'Orbitron', sans-serif;
-      color: #64748b;
-      margin-top: 6px;
-    }
-    .trl-step.active span, .trl-step.current span { color: #e2e8f0; }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: #334155;
-      font-size: .8rem;
-      border-top: 1px solid rgba(56,189,248,0.08);
-    }
-    .footer-link { color: #38bdf8; text-decoration: none; margin-top: 10px; display: inline-block; }
+    /* 3 PERSONY - ZAKŁADKI */
+    .persona-nav { display:flex; gap:10px; background: rgba(15,23,42,0.8); padding: 5px; border-radius: 12px; border: 1px solid rgba(56,189,248,0.2); flex-wrap: wrap;}
+    .nav-btn { background: transparent; color: #9ca3af; border: none; padding: 8px 16px; border-radius: 8px; font-family: 'Rajdhani'; font-weight: 700; letter-spacing: 1px; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.9rem;}
+    .nav-btn:hover { color: #fff; }
+    .nav-btn.active { background: linear-gradient(135deg,#06b6d4,#0891b2); color: white; box-shadow: 0 4px 15px rgba(6,182,212,0.3);}
+    
+    .hero { display:grid; grid-template-columns: minmax(0,2.1fr) minmax(0,2.2fr); gap:40px; align-items:center; }
+    @media (max-width:900px){ .hero {grid-template-columns:1fr;} }
+    
+    .persona-content { display: none; animation: fadeIn 0.5s ease-in-out; }
+    .persona-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .hero-left h1 { font-family:'Orbitron',sans-serif; font-size:clamp(2rem,4.8vw,3.2rem); letter-spacing:0.1em; margin-bottom:15px; line-height: 1.1;}
+    .hero-left .lead { font-size:1.1rem; line-height:1.7; color:#cbd5f5; margin-bottom:20px; }
+    
+    .badges { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px; }
+    .badge { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px; background:rgba(15,23,42,0.9); border:1px solid rgba(148,163,184,0.5); font-size:0.75rem; letter-spacing:0.14em; text-transform:uppercase; color:#cbd5e1; }
+    
+    .btn-row { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:15px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:12px; border:none; font-size:0.95rem; font-weight:700; cursor:pointer; text-decoration:none; transition:all .25s ease; }
+    .btn-primary { background:linear-gradient(135deg,#06b6d4,#0891b2); color:white; box-shadow:0 8px 25px rgba(6,182,212,0.4); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(6,182,212,0.6); }
+    .btn-ghost { background:rgba(15,23,42,0.85); border:1px solid rgba(56,189,248,0.5); color:#38bdf8; }
+    .btn-ghost:hover { background: rgba(56,189,248,0.1); transform:translateY(-2px); }
+
+    /* CARD & SCANNER UI */
+    .card { background:rgba(15,23,42,0.82); backdrop-filter:blur(16px); border-radius:22px; padding:22px 20px; border:1px solid rgba(148,163,184,0.35); box-shadow:0 20px 55px rgba(0,0,0,0.5); position:relative; }
+    .scan { font-family:"Courier New",monospace; font-size:0.8rem; padding:12px; border-radius:10px; background:rgba(2,6,23,0.92); border:1px solid rgba(56,189,248,0.5); margin-bottom:20px; position:relative; overflow:hidden; }
+    .scan::after { content:""; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(56,189,248,0.25),transparent); animation:scan 3s linear infinite; }
+    @keyframes scan { from{left:-100%;} to{left:100%;} }
+    .scan-line { display:flex; justify-content:space-between; margin-bottom:6px; }
+    .scan-label { color:#64748b; }
+    .scan-value { color:#4ade80; font-weight:700; }
+    
+    .list { display:grid; grid-template-columns:1fr; gap:16px; }
+    .list-item-title { font-size:1rem; font-weight:700; color: #38bdf8; margin-bottom:4px; font-family: 'Orbitron';}
+    .list-item-desc { font-size:0.9rem; color:#9ca3af; line-height:1.5; }
+    
+    footer { margin-top:50px; padding-top:20px; border-top:1px solid rgba(51,65,85,0.9); font-size:0.85rem; color:#6b7280; text-align: center; }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">COPERNIX OS</div>
-    <span class="badge">TRL 7 &bull; DEMO STACK</span>
-  </header>
+  <div class="shell">
+    <header>
+      <div>
+        <div class="logo-main">NEUROEDULABS</div>
+        <div style="font-size:0.8rem;color:#9ca3af;letter-spacing:0.14em;text-transform:uppercase;">Copernix OS · Edge AI Platform</div>
+      </div>
+      <nav class="persona-nav">
+        <button class="nav-btn active" data-target="szkoly">Dla Szkół / B2B</button>
+        <button class="nav-btn" data-target="rodzice">Dla Rodziców</button>
+        <button class="nav-btn" data-target="inwestorzy">Dla Inwestorów (Granty)</button>
+      </nav>
+    </header>
 
-  <div class="hero">
-    <h1>Platforma Edge AI wspierająca edukację i regulację emocji dzieci ze SPE</h1>
-    <p>Lokalna platforma Edge AI dla dzieci ze SPE, łącząca regulację emocji z edukacją STEM i eksploracją 3D. System działa lokalnie i może pracować całkowicie offline.</p>
-    <div class="btn-group">
-      <a href="pilot.html" class="btn btn-primary">Zgłoś szkołę do pilotażu (limit 10 szkół)</a>
-      <a href="https://luna-minicoach-bp701.onrender.com" class="btn btn-outline" target="_blank">Zobacz demo offline</a>
-    </div>
+    <main class="hero">
+      <section class="hero-left">
+        
+        <div id="szkoly" class="persona-content active">
+          <h1>Edukacja wspierana lokalnym AI</h1>
+          <p class="lead">Wdrażamy bezpieczne, działające offline środowisko Edge AI do szkół i ośrodków SPE. Wspieramy regulację emocji i naukę STEM bez wysyłania danych dzieci do chmury.</p>
+          <div class="badges">
+            <div class="badge">🛡️ <span>Zgodność z RODO / AI Act</span></div>
+            <div class="badge">🏫 <span>Panel Nauczyciela (IPET)</span></div>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="pilot.html">Zgłoś szkołę do pilotażu (Brak miejsc: 10/10)</a>
+          </div>
+        </div>
+
+        <div id="rodzice" class="persona-content">
+          <h1>Technologia, która rozumie Twoje dziecko</h1>
+          <p class="lead">Zbudowane z myślą o Dominiku, dostępne dla każdego. Copernix OS łączy grywalizację z treningiem emocjonalnym i skupieniem, tworząc bezpieczny cyfrowy plac zabaw.</p>
+          <div class="badges">
+            <div class="badge">💚 <span>Stworzone przez rodzica</span></div>
+            <div class="badge">🎮 <span>Zero przebodźcowania</span></div>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="https://neuroedulabs.onrender.com" target="_blank">Poznaj historię projektu</a>
+            <a class="btn btn-ghost" href="#" onclick="alert('Dostęp testowy dla rodziców zostanie uruchomiony w Q3 2026.'); return false;">Dołącz do listy oczekujących</a>
+          </div>
+        </div>
+
+        <div id="inwestorzy" class="persona-content">
+          <h1>Skalowalny EdTech & DeepTech</h1>
+          <p class="lead">System operacyjny dla edukacji (TRL 7). Łączymy lokalne modele LLM (DeepSeek/Qwen) z silnikami 3D (Cesium/Three.js) tworząc unikalną wartość IP na rynku europejskim.</p>
+          <div class="badges">
+            <div class="badge">🛰️ <span>TRL 7 Demo Stack</span></div>
+            <div class="badge">📈 <span>B2B / B2G Model</span></div>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="docs/Executive_Summary.pdf" target="_blank">📄 Pobierz Executive Summary</a>
+            <a class="btn btn-ghost" href="mailto:kontakt@neuroedulabs.pl">Umów pokaz systemu Live</a>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="card">
+        <div class="scan">
+          <div class="scan-line"><span class="scan-label">SYSTEM STATUS</span><span class="scan-value">OPERATIONAL · DEMO</span></div>
+          <div class="scan-line"><span class="scan-label">AI CORE</span><span class="scan-value">Titanium-MoE (Local Edge)</span></div>
+          <div class="scan-line"><span class="scan-label">DATA PRIVACY</span><span class="scan-value">SECURED (Zero-Cloud)</span></div>
+        </div>
+        
+        <h2 style="font-size:1.1rem;margin-bottom:15px; font-family:'Orbitron';">Główne Moduły Copernix OS:</h2>
+        <div class="list">
+          <div>
+            <div class="list-item-title">🧠 Luna Mini Coach V2</div>
+            <div class="list-item-desc">Grywalizowany asystent regulacji emocji (ćwiczenia oddechowe, misje skupienia).</div>
+          </div>
+          <div>
+            <div class="list-item-title">🌍 Andromeda Bridge 3D</div>
+            <div class="list-item-desc">Eksploracja kosmosu i Ziemi (Cesium) sterowana głosem lokalnego AI.</div>
+          </div>
+          <div>
+            <div class="list-item-title">🧩 Ghost Writer (Roblox)</div>
+            <div class="list-item-desc">Voice-to-Code: Dziecko mówi, system lokalnie generuje skrypty Lua w czasie rzeczywistym.</div>
+          </div>
+          <div>
+            <div class="list-item-title">📊 AI Director Panel</div>
+            <div class="list-item-desc">Zarządzanie telemetrią i analityką dla szkół (zgodność z wymogami IPET).</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>© 2026 NeuroEduLabs sp. z o.o. · Olsztyn, Polska | <a href="mailto:kontakt@neuroedulabs.pl" style="color:#38bdf8;">kontakt@neuroedulabs.pl</a></div>
+    </footer>
   </div>
 
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-value">12+</div>
-      <div class="stat-label">SZKÓŁ PILOTAŻ</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">340+</div>
-      <div class="stat-label">UCZNIÓW</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">ZERO</div>
-      <div class="stat-label">CLOUD / RODO READY</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">TRL 7</div>
-      <div class="stat-label">GOTOWOŚĆ SYSTEMOWA</div>
-    </div>
-  </div>
+  <script>
+    // Obsługa zakładek (Persony)
+    const tabs = document.querySelectorAll('.nav-btn');
+    const contents = document.querySelectorAll('.persona-content');
 
-  <div class="features">
-    <h2>ARCHITEKTURA SYSTEMU MODUŁOWEGO</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="card-icon">🧠</div>
-        <h3>LUNA: AI COACH</h3>
-        <p>Grywalizowany coach regulacji emocji. Inteligentny asystent dostosowuje materiał do tempa dziecka bez wysyłania danych do chmury.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🌍</div>
-        <h3>COPERNIX WORLD</h3>
-        <p>Trójwymiarowe środowisko edukacyjne. Nauka przez eksplorację kosmosu, oparta na uniwersalnych potrzebach dzieci ze SPE.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">📈</div>
-        <h3>TEACHER PANEL</h3>
-        <p>Dashboard analityczny generujący agregaty do IPET. 100% Local Computing zapewnia pełną prywatność danych uczniów.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🎮</div>
-        <h3>COSMIC LAB (STEM)</h3>
-        <p>Symulator fizyki i eksperymentów 3D. Każdy moduł stanowi oddzielny, skalowalny komponent edukacyjny.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🛡️</div>
-        <h3>EDGE AI SECURITY</h3>
-        <p>Pełne demo działa offline. Zero-cloud i pełna kontrola szkoły nad danymi to nasz fundament bezpieczeństwa.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🎓</div>
-        <h3>SPECJALNE POTRZEBY</h3>
-        <p>Platforma może być wdrażana lokalnie w szkołach podstawowych i ośrodkach SPE wspierając terapię i edukację.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="trl-bar">
-    <h2>TRL 7 – SYSTEM DEMONSTRACYJNY W ŚRODOWISKU OPERACYJNYM</h2>
-    <div class="trl-track">
-      <div class="trl-step active" style="height:28px"><span>1</span></div>
-      <div class="trl-step active" style="height:36px"><span>2</span></div>
-      <div class="trl-step active" style="height:44px"><span>3</span></div>
-      <div class="trl-step active" style="height:52px"><span>4</span></div>
-      <div class="trl-step active" style="height:60px"><span>5</span></div>
-      <div class="trl-step active" style="height:68px"><span>6</span></div>
-      <div class="trl-step current" style="height:80px"><span>7</span></div>
-      <div class="trl-step" style="height:76px"><span>8</span></div>
-      <div class="trl-step" style="height:84px"><span>9</span></div>
-    </div>
-    <p style="font-size: 0.8rem; color: #64748b; margin-top: 1rem;">System z lokalnym przetwarzaniem danych (Edge AI)</p>
-  </div>
-
-  <footer>
-    <p>&copy; 2026 NeuroEduLabs sp. z o.o. &bull; Copernix OS &bull; Olsztyn, Polska</p>
-    <a href="mailto:kontakt@neuroedulabs.pl" class="footer-link">Kontakt: kontakt@neuroedulabs.pl</a>
-  </footer>
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
