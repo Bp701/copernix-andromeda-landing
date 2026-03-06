@@ -1,172 +1,654 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Copernix System · NeuroEduLabs</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="https://neuroedulabs.onrender.com/favicon.png">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@400;600;700&display=swap');
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background: radial-gradient(circle at top left, rgba(56,189,248,0.14) 0, transparent 55%),
-                  radial-gradient(circle at bottom right, rgba(236,72,153,0.14) 0, transparent 55%),
-                  #020617;
-      color:#e5e7eb; font-family:'Rajdhani',sans-serif; min-height:100vh; overflow-x: hidden;
-    }
-    .shell { max-width:1200px; margin:0 auto; padding:32px 16px 48px; }
-    header { display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap:16px; margin-bottom:40px; border-bottom: 1px solid rgba(56,189,248,0.15); padding-bottom: 15px;}
-    .logo-main {
-      font-family:'Orbitron',sans-serif; font-size:1.6rem; letter-spacing:0.2em; text-transform:uppercase;
-      background:linear-gradient(135deg,#06b6d4,#a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    }
-    .persona-nav { display:flex; gap:10px; background: rgba(15,23,42,0.8); padding: 5px; border-radius: 12px; border: 1px solid rgba(56,189,248,0.2); flex-wrap: wrap;}
-    .nav-btn { background: transparent; color: #9ca3af; border: none; padding: 8px 16px; border-radius: 8px; font-family: 'Rajdhani'; font-weight: 700; letter-spacing: 1px; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.9rem;}
-    .nav-btn:hover { color: #fff; }
-    .nav-btn.active { background: linear-gradient(135deg,#06b6d4,#0891b2); color: white; box-shadow: 0 4px 15px rgba(6,182,212,0.3);}
-    
-    .hero { display:grid; grid-template-columns: minmax(0,2.1fr) minmax(0,2.2fr); gap:40px; align-items:center; }
-    @media (max-width:900px){ .hero {grid-template-columns:1fr;} }
-    
-    .persona-content { display: none; animation: fadeIn 0.5s ease-in-out; }
-    .persona-content.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copernix System · NeuroEduLabs — AI dla dzieci ze SPE</title>
+    <meta name="description" content="Copernix System — lokalne AI wspierające regulację emocji i naukę STEM dla dzieci ze specjalnymi potrzebami edukacyjnymi. Offline-first, RODO, zero chmury.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #020617;
+            --bg-card: rgba(15,23,42,0.85);
+            --cyan: #06b6d4;
+            --cyan-glow: rgba(6,182,212,0.15);
+            --purple: #a855f7;
+            --purple-glow: rgba(168,85,247,0.15);
+            --green: #22c55e;
+            --orange: #f59e0b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: rgba(148,163,184,0.15);
+        }
 
-    .hero-left h1 { font-family:'Orbitron',sans-serif; font-size:clamp(2rem,4.8vw,3.2rem); letter-spacing:0.1em; margin-bottom:15px; line-height: 1.1;}
-    .hero-left .lead { font-size:1.1rem; line-height:1.7; color:#cbd5f5; margin-bottom:20px; }
-    
-    .badges { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px; }
-    .badge { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px; background:rgba(15,23,42,0.9); border:1px solid rgba(148,163,184,0.5); font-size:0.75rem; letter-spacing:0.14em; text-transform:uppercase; color:#cbd5e1; }
-    
-    .btn-row { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:15px; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:12px; border:none; font-size:0.95rem; font-weight:700; cursor:pointer; text-decoration:none; transition:all .25s ease; }
-    .btn-primary { background:linear-gradient(135deg,#06b6d4,#0891b2); color:white; box-shadow:0 8px 25px rgba(6,182,212,0.4); }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(6,182,212,0.6); }
-    .btn-ghost { background:rgba(15,23,42,0.85); border:1px solid rgba(56,189,248,0.5); color:#38bdf8; }
-    .btn-ghost:hover { background: rgba(56,189,248,0.1); transform:translateY(-2px); }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
-    .card { background:rgba(15,23,42,0.82); backdrop-filter:blur(16px); border-radius:22px; padding:22px 20px; border:1px solid rgba(148,163,184,0.35); box-shadow:0 20px 55px rgba(0,0,0,0.5); position:relative; }
-    .scan { font-family:"Courier New",monospace; font-size:0.8rem; padding:12px; border-radius:10px; background:rgba(2,6,23,0.92); border:1px solid rgba(56,189,248,0.5); margin-bottom:20px; position:relative; overflow:hidden; }
-    .scan::after { content:""; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(56,189,248,0.25),transparent); animation:scan 3s linear infinite; }
-    @keyframes scan { from{left:-100%;} to{left:100%;} }
-    .scan-line { display:flex; justify-content:space-between; margin-bottom:6px; }
-    .scan-label { color:#64748b; }
-    .scan-value { color:#4ade80; font-weight:700; }
-    
-    .list { display:grid; grid-template-columns:1fr; gap:16px; }
-    .list-item-title { font-size:1rem; font-weight:700; color: #38bdf8; margin-bottom:4px; font-family: 'Orbitron';}
-    .list-item-desc { font-size:0.9rem; color:#9ca3af; line-height:1.5; }
-    
-    footer { margin-top:50px; padding-top:20px; border-top:1px solid rgba(51,65,85,0.9); font-size:0.85rem; color:#6b7280; text-align: center; }
-  </style>
+        body {
+            background: var(--bg-deep);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER / NAV ===== */
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(2,6,23,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+        }
+        .header-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            height: 70px;
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700; font-size: 1.3rem;
+            color: var(--cyan);
+            letter-spacing: 0.15em;
+        }
+        .logo span { color: var(--text-muted); font-size: 0.65rem; display: block; letter-spacing: 0.3em; font-family: 'Rajdhani'; }
+
+        .nav-tabs { display: flex; gap: 0; }
+        .nav-tab {
+            padding: 0.7rem 1.4rem;
+            font-size: 0.85rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            cursor: pointer; border: none; background: none;
+            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .nav-tab:hover { color: var(--text); }
+        .nav-tab.active {
+            color: var(--cyan);
+            border-bottom-color: var(--cyan);
+        }
+        .nav-tab[data-tab="rodzice"].active { color: var(--purple); border-bottom-color: var(--purple); }
+        .nav-tab[data-tab="inwestorzy"].active { color: var(--orange); border-bottom-color: var(--orange); }
+
+        /* ===== HERO ===== */
+        .hero {
+            max-width: 1200px; margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+            align-items: center;
+            min-height: 80vh;
+        }
+        .hero-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 900; line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+        .hero-text h1 .highlight-cyan { color: var(--cyan); }
+        .hero-text h1 .highlight-purple { color: var(--purple); }
+
+        .hero-subtitle {
+            font-size: 1.15rem; color: var(--text-muted);
+            margin-bottom: 2rem; line-height: 1.7;
+            max-width: 520px;
+        }
+        .hero-subtitle strong { color: var(--text); }
+
+        .hero-badges {
+            display: flex; gap: 1rem; flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .badge-green { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: var(--green); }
+        .badge-cyan { background: var(--cyan-glow); border: 1px solid rgba(6,182,212,0.3); color: var(--cyan); }
+        .badge-purple { background: var(--purple-glow); border: 1px solid rgba(168,85,247,0.3); color: var(--purple); }
+
+        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            font-family: 'Rajdhani'; font-size: 1rem; font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+            border: none; cursor: pointer;
+        }
+        .btn-primary {
+            background: var(--cyan); color: var(--bg-deep);
+            box-shadow: 0 0 30px rgba(6,182,212,0.25);
+        }
+        .btn-primary:hover { background: #22d3ee; transform: translateY(-2px); box-shadow: 0 0 40px rgba(6,182,212,0.4); }
+        .btn-outline {
+            background: transparent; color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+        .btn-purple { background: var(--purple); color: white; box-shadow: 0 0 30px rgba(168,85,247,0.25); }
+        .btn-purple:hover { background: #c084fc; transform: translateY(-2px); }
+        .btn-orange { background: var(--orange); color: var(--bg-deep); box-shadow: 0 0 30px rgba(245,158,11,0.25); }
+        .btn-orange:hover { background: #fbbf24; transform: translateY(-2px); }
+
+        /* STATUS PANEL */
+        .status-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .status-panel::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cyan), var(--purple));
+        }
+        .status-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 1rem; margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.75rem; letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .status-online { color: var(--green); }
+        .module-list { display: flex; flex-direction: column; gap: 1.2rem; }
+        .module-item {
+            display: flex; align-items: flex-start; gap: 1rem;
+        }
+        .module-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+        .module-icon-cyan { background: var(--cyan-glow); border: 1px solid rgba(6,182,212,0.3); }
+        .module-icon-purple { background: var(--purple-glow); border: 1px solid rgba(168,85,247,0.3); }
+        .module-icon-green { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); }
+        .module-icon-orange { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); }
+        .module-name { font-weight: 700; font-size: 0.95rem; color: var(--cyan); }
+        .module-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+
+        /* ===== HOW IT WORKS ===== */
+        .section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem; font-weight: 700;
+            text-align: center; margin-bottom: 0.5rem;
+        }
+        .section-subtitle {
+            text-align: center; color: var(--text-muted);
+            font-size: 1rem; margin-bottom: 3rem;
+        }
+
+        .steps-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+            position: relative;
+        }
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .step-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
+        .step-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem; font-weight: 900;
+            color: var(--cyan);
+            opacity: 0.2;
+            position: absolute; top: 1rem; left: 1.5rem;
+        }
+        .step-icon {
+            font-size: 2.5rem; margin-bottom: 1rem;
+        }
+        .step-title {
+            font-size: 1.2rem; font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .step-desc {
+            font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
+        }
+        .step-arrow {
+            position: absolute; right: -2rem; top: 50%;
+            transform: translateY(-50%);
+            color: var(--cyan); font-size: 1.5rem; opacity: 0.4;
+        }
+
+        /* ===== STATS ===== */
+        .stats-bar {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .stats-inner {
+            max-width: 1200px; margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem; font-weight: 900;
+            color: var(--cyan);
+        }
+        .stat-label {
+            font-size: 0.8rem; color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+        .stat-source {
+            font-size: 0.65rem; color: rgba(148,163,184,0.5);
+            margin-top: 0.2rem;
+        }
+
+        /* ===== PERSONA SECTIONS ===== */
+        .persona-section { display: none; }
+        .persona-section.active { display: block; }
+
+        .features-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        .feature-card:hover { border-color: var(--cyan); }
+        .feature-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+        .feature-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* ===== STORY ===== */
+        .story-section {
+            background: linear-gradient(135deg, rgba(168,85,247,0.05), rgba(6,182,212,0.05));
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .story-content {
+            max-width: 800px; margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .story-quote {
+            font-size: 1.3rem; font-style: italic;
+            color: var(--text); line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .story-author { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ===== PILOT CTA ===== */
+        .pilot-cta {
+            max-width: 800px; margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .pilot-box {
+            background: var(--bg-card);
+            border: 2px solid var(--cyan);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 0 60px rgba(6,182,212,0.1);
+        }
+        .pilot-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem; margin-bottom: 1rem;
+            color: var(--cyan);
+        }
+        .pilot-box p {
+            color: var(--text-muted); margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        footer a { color: var(--cyan); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; min-height: auto; }
+            .status-panel { margin-top: 2rem; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .step-arrow { display: none; }
+            .stats-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .nav-tabs { gap: 0; }
+            .nav-tab { padding: 0.7rem 0.8rem; font-size: 0.75rem; }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-text { animation: fadeUp 0.8s ease-out; }
+        .status-panel { animation: fadeUp 0.8s ease-out 0.2s both; }
+        .step-card:nth-child(1) { animation: fadeUp 0.6s ease-out 0.3s both; }
+        .step-card:nth-child(2) { animation: fadeUp 0.6s ease-out 0.5s both; }
+        .step-card:nth-child(3) { animation: fadeUp 0.6s ease-out 0.7s both; }
+    </style>
 </head>
 <body>
-  <div class="shell">
-    <header>
-      <div>
-        <div class="logo-main">NEUROEDULABS</div>
-        <div style="font-size:0.8rem;color:#9ca3af;letter-spacing:0.14em;text-transform:uppercase;">Copernix System · Edge AI Platform</div>
-      </div>
-      <nav class="persona-nav">
-        <button class="nav-btn active" data-target="szkoly">Dla Szkół / B2B</button>
-        <button class="nav-btn" data-target="rodzice">Dla Rodziców</button>
-        <button class="nav-btn" data-target="inwestorzy">Dla Inwestorów (Granty)</button>
-      </nav>
-    </header>
 
-    <main class="hero">
-      <section class="hero-left">
-        
-        <!-- SZKOŁY -->
-        <div id="szkoly" class="persona-content active">
-          <h1>Edukacja wspierana lokalnym AI</h1>
-          <p class="lead">Wdrażamy bezpieczne, działające offline środowisko Edge AI do szkół i ośrodków SPE. Wspieramy regulację emocji i naukę STEM bez wysyłania danych dzieci do chmury.</p>
-          <div class="badges">
-            <div class="badge">🛡️ <span>Zgodność z RODO / AI Act</span></div>
-            <div class="badge">🏫 <span>Panel Nauczyciela (IPET)</span></div>
-          </div>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="pilot.html">Zgłoś szkołę do pilotażu (Wolne miejsca: 10)</a>
-          </div>
+<!-- HEADER -->
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            NEUROEDULABS
+            <span>Copernix System &middot; Edge AI Platform</span>
+        </div>
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="szkoly">Dla Szkół / B2B</button>
+            <button class="nav-tab" data-tab="rodzice">Dla Rodziców</button>
+            <button class="nav-tab" data-tab="inwestorzy">Dla Inwestorów</button>
+        </nav>
+    </div>
+</header>
+
+<!-- ============================================ -->
+<!-- TAB: DLA SZKÓŁ -->
+<!-- ============================================ -->
+<div class="persona-section active" id="tab-szkoly">
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1>
+                System AI wspierający
+                <span class="highlight-cyan">koncentrację</span> i
+                <span class="highlight-cyan">regulację emocji</span>
+                u dzieci ze SPE
+            </h1>
+            <p class="hero-subtitle">
+                Wdrażamy <strong>bezpieczne, offline środowisko Edge AI</strong> do szkół i ośrodków.
+                Wspieramy naukę STEM i regulację emocji <strong>bez wysyłania danych dzieci do chmury</strong>.
+            </p>
+            <div class="hero-badges">
+                <span class="badge badge-green">Zgodność z RODO / AI Act</span>
+                <span class="badge badge-cyan">Panel Nauczyciela (IPET)</span>
+                <span class="badge badge-purple">100% Offline</span>
+            </div>
+            <div class="hero-cta">
+                <a href="pilot.html" class="btn btn-primary">Zgłoś szkołę do pilotażu</a>
+                <a href="mailto:piotr-lunaminicoach@proton.me" class="btn btn-outline">Umów pokaz systemu</a>
+            </div>
         </div>
 
-        <!-- RODZICE -->
-        <div id="rodzice" class="persona-content">
-          <h1>Technologia, która rozumie Twoje dziecko</h1>
-          <p class="lead">Zbudowane z myślą o Dominiku, dostępne dla każdego. Copernix System łączy grywalizację z treningiem emocjonalnym i skupieniem, tworząc bezpieczny cyfrowy plac zabaw.</p>
-          <div class="badges">
-            <div class="badge">💚 <span>Stworzone przez rodzica</span></div>
-            <div class="badge">🎮 <span>Zero przebodźcowania</span></div>
-          </div>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="https://neuroedulabs.onrender.com" target="_blank">Poznaj historię i narzędzia (Luna V1 & V2)</a>
-            <a class="btn btn-ghost" href="#" onclick="alert('Dostęp testowy dla rodziców zostanie uruchomiony w Q3 2026.'); return false;">Dołącz do listy oczekujących</a>
-          </div>
+        <div class="status-panel">
+            <div class="status-header">
+                <span>Główne moduły Copernix System</span>
+                <span class="status-online">OPERATIONAL</span>
+            </div>
+            <div class="module-list">
+                <div class="module-item">
+                    <div class="module-icon module-icon-purple">&#x1F9E0;</div>
+                    <div>
+                        <div class="module-name">Luna Mini Coach V2</div>
+                        <div class="module-desc">Grywalizowany asystent regulacji emocji. Ćwiczenia oddechowe, misje skupienia, system nagród.</div>
+                    </div>
+                </div>
+                <div class="module-item">
+                    <div class="module-icon module-icon-cyan">&#x1F30D;</div>
+                    <div>
+                        <div class="module-name">Andromeda Bridge 3D</div>
+                        <div class="module-desc">Eksploracja kosmosu i Ziemi (Cesium) sterowana głosem lokalnego AI.</div>
+                    </div>
+                </div>
+                <div class="module-item">
+                    <div class="module-icon module-icon-orange">&#x1F9E9;</div>
+                    <div>
+                        <div class="module-name">Luna Architect (Roblox)</div>
+                        <div class="module-desc">Voice-to-Code: Dziecko mówi, system lokalnie generuje skrypty Lua w czasie rzeczywistym.</div>
+                    </div>
+                </div>
+                <div class="module-item">
+                    <div class="module-icon module-icon-green">&#x1F4CA;</div>
+                    <div>
+                        <div class="module-name">AI Director Panel</div>
+                        <div class="module-desc">Zarządzanie telemetrią i analityką dla szkół. Zgodność z wymogami IPET.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section">
+        <h2 class="section-title">Jak to działa?</h2>
+        <p class="section-subtitle">Trzy kroki od instalacji do wyników</p>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">01</div>
+                <div class="step-icon">&#x1F680;</div>
+                <h3 class="step-title">Dziecko uruchamia misję</h3>
+                <p class="step-desc">System startuje lokalnie na szkolnym komputerze. Dziecko wybiera planetę i rozpoczyna interaktywną misję edukacyjną lub ćwiczenie emocjonalne.</p>
+                <span class="step-arrow">&#x27A1;</span>
+            </div>
+            <div class="step-card">
+                <div class="step-number">02</div>
+                <div class="step-icon">&#x1F9E0;</div>
+                <h3 class="step-title">AI prowadzi ćwiczenie</h3>
+                <p class="step-desc">Luna Mini Coach dostosowuje tempo i trudność do dziecka. Ćwiczenia oddechowe, quizy STEM, budowanie w 3D — wszystko offline, bez chmury.</p>
+                <span class="step-arrow">&#x27A1;</span>
+            </div>
+            <div class="step-card">
+                <div class="step-number">03</div>
+                <div class="step-icon">&#x1F4C8;</div>
+                <h3 class="step-title">Nauczyciel widzi postęp</h3>
+                <p class="step-desc">Panel AI Director pokazuje czas skupienia, ukończone misje i trendy. Dane nie opuszczają szkoły. Gotowe do wpisu w IPET.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ============================================ -->
+<!-- TAB: DLA RODZICÓW -->
+<!-- ============================================ -->
+<div class="persona-section" id="tab-rodzice">
+    <section class="hero">
+        <div class="hero-text">
+            <h1>
+                Technologia, która rozumie
+                <span class="highlight-purple">Twoje dziecko</span>
+            </h1>
+            <p class="hero-subtitle">
+                Zbudowane z myślą o Dominiku, dostępne dla każdego.
+                Copernix System łączy <strong>grywalizację z treningiem emocjonalnym</strong> i skupieniem,
+                tworząc bezpieczny cyfrowy plac zabaw.
+            </p>
+            <div class="hero-badges">
+                <span class="badge badge-green">Stworzone przez rodzica</span>
+                <span class="badge badge-purple">Zero przebodźcowania</span>
+                <span class="badge badge-cyan">Gra jest nośnikiem terapii</span>
+            </div>
+            <div class="hero-cta">
+                <a href="https://neuroedulabs.onrender.com" class="btn btn-purple">Poznaj historię i narzędzia (Luna V1 & V2)</a>
+                <a href="#waitlist" class="btn btn-outline" onclick="alert('Dostęp testowy dla rodziców zostanie uruchomiony w Q3 2026.')">Dołącz do listy oczekujących</a>
+            </div>
         </div>
 
-        <!-- INWESTORZY / GRANTY -->
-        <div id="inwestorzy" class="persona-content">
-          <h1>Skalowalny EdTech & DeepTech</h1>
-          <p class="lead">System operacyjny dla edukacji (TRL 7). Łączymy lokalne modele LLM (DeepSeek/Qwen) z silnikami 3D (Cesium/Three.js) tworząc unikalną wartość IP na rynku europejskim.</p>
-          <div class="badges">
-            <div class="badge">🛰️ <span>TRL 7 Demo Stack</span></div>
-            <div class="badge">📈 <span>B2B / B2G Model</span></div>
-          </div>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="https://neuroedulabs.onrender.com" target="_blank">Zobacz ekosystem NeuroEduLabs</a>
-            <a class="btn btn-ghost" href="mailto:piotr-lunaminicoach@proton.me">Umów pokaz systemu Live</a>
-          </div>
+        <div class="status-panel">
+            <div class="status-header">
+                <span>Co dostaje Twoje dziecko?</span>
+                <span class="status-online">BEZPIECZNE</span>
+            </div>
+            <div class="module-list">
+                <div class="module-item">
+                    <div class="module-icon module-icon-purple">&#x2B50;</div>
+                    <div>
+                        <div class="module-name">Misje skupienia i wyciszenia</div>
+                        <div class="module-desc">Ćwiczenia oddechowe, misje eksploracyjne, system nagród — zaprojektowane z terapeutami.</div>
+                    </div>
+                </div>
+                <div class="module-item">
+                    <div class="module-icon module-icon-cyan">&#x1F30C;</div>
+                    <div>
+                        <div class="module-name">Nauka przez zabawę w kosmosie</div>
+                        <div class="module-desc">Dziecko myśli "gram w kosmos", a w tle robi ćwiczenia koncentracji i regulacji emocji.</div>
+                    </div>
+                </div>
+                <div class="module-item">
+                    <div class="module-icon module-icon-green">&#x1F512;</div>
+                    <div>
+                        <div class="module-name">Prywatność na pierwszym miejscu</div>
+                        <div class="module-desc">Wszystko działa lokalnie. Żadne dane Twojego dziecka nie trafiają do internetu.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ============================================ -->
+<!-- TAB: DLA INWESTORÓW -->
+<!-- ============================================ -->
+<div class="persona-section" id="tab-inwestorzy">
+    <section class="hero">
+        <div class="hero-text">
+            <h1>
+                Skalowalny
+                <span class="highlight-cyan">EdTech</span> &
+                <span class="highlight-cyan">DeepTech</span>
+            </h1>
+            <p class="hero-subtitle">
+                Copernix System łączy <strong>lokalne modele LLM</strong> (DeepSeek/Qwen) z silnikami 3D (Cesium/Three.js),
+                tworząc unikalną wartość IP na rynku europejskim. Offline-first, RODO-native, gotowy na AI Act.
+            </p>
+            <div class="hero-badges">
+                <span class="badge badge-cyan">TRL 5-6 · Demo Stack</span>
+                <span class="badge badge-orange">B2B / B2G Model</span>
+                <span class="badge badge-green">Edge AI · Zero-Cloud</span>
+            </div>
+            <div class="hero-cta">
+                <a href="https://neuroedulabs.onrender.com" class="btn btn-orange">Zobacz ekosystem NeuroEduLabs</a>
+                <a href="mailto:piotr-lunaminicoach@proton.me" class="btn btn-outline">Umów spotkanie</a>
+            </div>
         </div>
 
-      </section>
-
-      <section class="card">
-        <div class="scan">
-          <div class="scan-line"><span class="scan-label">SYSTEM STATUS</span><span class="scan-value">OPERATIONAL · DEMO</span></div>
-          <div class="scan-line"><span class="scan-label">AI CORE</span><span class="scan-value">Titanium-MoE (Local Edge)</span></div>
-          <div class="scan-line"><span class="scan-label">DATA PRIVACY</span><span class="scan-value">SECURED (Zero-Cloud)</span></div>
+        <div class="status-panel">
+            <div class="status-header">
+                <span>Kluczowe metryki</span>
+                <span class="status-online">PRE-SEED</span>
+            </div>
+            <div class="module-list">
+                <div class="module-item">
+                    <div class="module-icon module-icon-cyan">&#x1F3AF;</div>
+                    <div>
+                        <div class="module-name">181 600 uczniów z SPE w Polsce</div>
+                        <div class="module-desc">Rosnący rynek bez dedykowanych narzędzi AI. Brak konkurencji w segmencie offline Edge AI.</div>
+                    </div>
+                </div>
+                <div class="module-item">
+                    <div class="module-icon module-icon-green">&#x1F6E1;</div>
+                    <div>
+                        <div class="module-name">Regulatory moat</div>
+                        <div class="module-desc">AI Act + RODO + dane dzieci = bariera wejścia dla konkurentów chmurowych. Privacy-by-design jako przewaga.</div>
+                    </div>
+                </div>
+                <div class="module-item">
+                    <div class="module-icon module-icon-orange">&#x1F4B0;</div>
+                    <div>
+                        <div class="module-name">Model: licencja roczna per szkoła</div>
+                        <div class="module-desc">B2B SaaS-like pricing. Ścieżka: pilotaż bezpłatny → licencja roczna → wsparcie + szkolenia.</div>
+                    </div>
+                </div>
+                <div class="module-item">
+                    <div class="module-icon module-icon-purple">&#x1F52C;</div>
+                    <div>
+                        <div class="module-name">Cel: grant PARP 300-600K PLN</div>
+                        <div class="module-desc">Wniosek grantowy FENG/SMART w przygotowaniu. Pilotaż szkolny jako warunek wejścia.</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <h2 style="font-size:1.1rem;margin-bottom:15px; font-family:'Orbitron';">Główne Moduły Copernix System:</h2>
-        <div class="list">
-          <div>
-            <div class="list-item-title">🧠 Luna Mini Coach V2</div>
-            <div class="list-item-desc">Grywalizowany asystent regulacji emocji (ćwiczenia oddechowe, misje skupienia).</div>
-          </div>
-          <div>
-            <div class="list-item-title">🌍 Andromeda Bridge 3D</div>
-            <div class="list-item-desc">Eksploracja kosmosu i Ziemi (Cesium) sterowana głosem lokalnego AI.</div>
-          </div>
-          <div>
-            <div class="list-item-title">🧩 Luna Architect (Roblox)</div>
-            <div class="list-item-desc">Voice-to-Code: Dziecko mówi, system lokalnie generuje skrypty Lua w czasie rzeczywistym.</div>
-          </div>
-          <div>
-            <div class="list-item-title">📊 AI Director Panel</div>
-            <div class="list-item-desc">Zarządzanie telemetrią i analityką dla szkół (zgodność z wymogami IPET).</div>
-          </div>
+    </section>
+</div>
+
+<!-- ============================================ -->
+<!-- STATS BAR (visible on all tabs) -->
+<!-- ============================================ -->
+<div class="stats-bar">
+    <div class="stats-inner">
+        <div>
+            <div class="stat-value">181,6 tys.</div>
+            <div class="stat-label">Uczniów z orzeczeniami SPE w Polsce</div>
+            <div class="stat-source">Dane GUS 2025</div>
         </div>
-      </section>
-    </main>
+        <div>
+            <div class="stat-value" style="color: var(--orange);">+15,9 tys./rok</div>
+            <div class="stat-label">Wzrost liczby orzeczeń rok do roku</div>
+            <div class="stat-source">Raport MEN 2023/2025</div>
+        </div>
+        <div>
+            <div class="stat-value" style="color: var(--purple);">5-13%</div>
+            <div class="stat-label">Dzieci z trudnościami sensorycznymi</div>
+            <div class="stat-source">Badania neuropsychiatryczne</div>
+        </div>
+    </div>
+</div>
 
-    <footer>
-      <div>© 2026 NeuroEduLabs sp. z o.o. · Olsztyn, Polska | <a href="mailto:piotr-lunaminicoach@proton.me" style="color:#38bdf8;">piotr-lunaminicoach@proton.me</a></div>
-    </footer>
-  </div>
+<!-- STORY -->
+<div class="story-section">
+    <div class="story-content">
+        <p class="story-quote">
+            &ldquo;Jestem tatą 8-letniego Dominika z niepełnosprawnością ruchową i trudnościami w przetwarzaniu bodźców sensorycznych. Nie mogłem czekać na idealne wsparcie, więc zacząłem je budować. Tworzymy ekosystem AI wspierający dzieci ze specjalnymi potrzebami edukacyjnymi &mdash; w domu i w szkole.&rdquo;
+        </p>
+        <p class="story-author">
+            &mdash; Piotr Lipski, Founder & CEO NeuroEduLabs, Olsztyn
+        </p>
+    </div>
+</div>
 
-  <script>
-    const tabs = document.querySelectorAll('.nav-btn');
-    const contents = document.querySelectorAll('.persona-content');
+<!-- PILOT CTA -->
+<div class="pilot-cta">
+    <div class="pilot-box">
+        <h2>Zgłoś szkołę do bezpłatnego pilotażu</h2>
+        <p>
+            Szukamy 10 szkół i ośrodków z Warmii i Mazur do testowania Copernix System.
+            Bezpłatnie. Bez zobowiązań. Z pełnym wsparciem technicznym.
+        </p>
+        <a href="pilot.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 3rem;">
+            Zgłoś szkołę (Wolne miejsca: 10)
+        </a>
+    </div>
+</div>
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
-        
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
-      });
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 NeuroEduLabs &middot; Olsztyn, Polska &middot;
+        <a href="mailto:piotr-lunaminicoach@proton.me">piotr-lunaminicoach@proton.me</a>
+    </p>
+</footer>
+
+<script>
+    // Tab switching
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.persona-section').forEach(s => s.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+        });
     });
-  </script>
+</script>
+
 </body>
 </html>
