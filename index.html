@@ -105,6 +105,25 @@
         <div class="step"><div class="sn">03</div><div class="si">&#128200;</div><h3 class="stt">Nauczyciel widzi postęp</h3><p class="sd">Panel AI Director pokazuje czas skupienia, ukończone misje i trendy. Dane nie opuszczają szkoły. Gotowe do wpisu w IPET.</p></div>
     </div>
 </section>
+<!-- SECURITY SECTION -->
+<section class="sec" style="padding-top:2rem">
+    <div style="background:var(--card);border:1px solid rgba(34,197,94,0.2);border-radius:18px;padding:2.5rem;max-width:900px;margin:0 auto">
+        <h2 style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:var(--gr);margin-bottom:1.5rem;text-align:center">&#128274; Architektura bezpieczeństwa danych</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:1.5rem">
+            <div style="padding:1.2rem;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:12px">
+                <div style="font-size:0.7rem;color:#ef4444;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem">Większość platform EdTech:</div>
+                <div style="font-size:0.8rem;color:var(--txm);line-height:1.6">Dziecko → Aplikacja → Serwery w USA/chmurze → Model AI → odpowiedź</div>
+            </div>
+            <div style="padding:1.2rem;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px">
+                <div style="font-size:0.7rem;color:var(--gr);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem">Copernix System:</div>
+                <div style="font-size:0.8rem;color:var(--txm);line-height:1.6">Dziecko → Komputer szkolny → Lokalny model AI → odpowiedź<br><strong style="color:var(--gr)">(zero transferu danych na zewnątrz)</strong></div>
+            </div>
+        </div>
+        <div style="font-size:0.82rem;color:var(--txm);line-height:1.7">
+            <strong style="color:var(--tx)">Co to oznacza w praktyce:</strong> Żadne nagrania głosu ani dane o postępach dziecka nie opuszczają urządzenia szkoły. Pełna zgodność z RODO i AI Act. Dyrektor szkoły może pokazać rodzicom: „dane są tutaj, na tym komputerze, nigdzie nie wychodzą". Sovereign AI — europejskie dane, europejska kontrola.
+        </div>
+    </div>
+</section>
 </div>
 
 <!-- RODZICE -->
@@ -170,11 +189,23 @@
     <button onclick="document.getElementById('email-box').style.display='none'" style="margin-top:1.5rem;background:var(--bd);color:var(--tx);border:none;padding:0.6rem 1.5rem;border-radius:8px;cursor:pointer;font-family:'Rajdhani';font-weight:600">Zamknij</button>
 </div>
 
+<!-- NOTA PRAWNA -->
+<div style="max-width:800px;margin:0 auto;padding:0 2rem 2rem">
+    <div style="padding:1.5rem;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:12px;font-size:0.75rem;color:var(--txm);line-height:1.7">
+        <strong style="color:var(--or)">NOTA PRAWNA</strong><br>
+        Aplikacja Luna jest narzędziem edukacyjnym wspierającym rozwój koncentracji i regulacji emocji u dzieci. Nie jest wyrobem medycznym i nie zastępuje diagnozy ani terapii specjalistycznej.<br><br>
+        <strong style="color:var(--or)">OCHRONA DANYCH (RODO)</strong><br>
+        <span style="color:var(--tx);font-weight:600">Administrator danych: Piotr Brodziński, NeuroEduLabs, Olsztyn, Polska</span><br>
+        Kontakt: <span id="em-nota"></span><br><br>
+        System Copernix działa w architekturze Edge AI (offline-first). Dane użytkowników nie są przesyłane do zewnętrznych usług chmurowych — przetwarzanie odbywa się lokalnie. Privacy by Design zgodnie z art. 25 RODO. Podstawa prawna przetwarzania: art. 6 ust. 1 lit. b RODO (wykonanie umowy/pilotażu) oraz art. 8 RODO w zakresie danych dzieci.
+    </div>
+</div>
+
 <footer><p>&copy; 2026 NeuroEduLabs &middot; Olsztyn, Polska &middot; <span id="fe" style="color:var(--cy);cursor:pointer" onclick="document.getElementById('email-box').style.display='block'"></span></p></footer>
 
 <script>
 // CF-safe email rendering
-(function(){var u='piotr-lunaminicoach';var d='proton.me';var e=u+'@'+d;document.getElementById('em').textContent=e;document.getElementById('fe').textContent=e;})();
+(function(){var u='piotr-lunaminicoach';var d='proton.me';var e=u+'@'+d;document.getElementById('em').textContent=e;document.getElementById('fe').textContent=e;var n=document.getElementById('em-nota');if(n)n.textContent=e;})();
 // Tab switching
 document.querySelectorAll('.tab').forEach(function(t){
     t.addEventListener('click',function(){
