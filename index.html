@@ -36,6 +36,7 @@
         .btn-pu{background:var(--pu);color:#fff;box-shadow:0 0 25px rgba(168,85,247,0.2)}.btn-pu:hover{background:#c084fc;transform:translateY(-2px)}
         .btn-or{background:var(--or);color:var(--bg);box-shadow:0 0 25px rgba(245,158,11,0.2)}.btn-or:hover{background:#fbbf24;transform:translateY(-2px)}
         .btn-o{background:transparent;color:var(--tx);border:1px solid var(--bd)}.btn-o:hover{border-color:var(--cy);color:var(--cy)}
+        .btn-gr{background:var(--gr);color:#fff;box-shadow:0 0 25px rgba(34,197,94,0.2)}.btn-gr:hover{background:#16a34a;transform:translateY(-2px)}
         .spanel{background:var(--card);backdrop-filter:blur(16px);border:1px solid var(--bd);border-radius:20px;padding:2rem;position:relative;overflow:hidden}
         .spanel::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cy),var(--pu))}
         .sh{display:flex;justify-content:space-between;align-items:center;padding-bottom:0.8rem;margin-bottom:1.2rem;border-bottom:1px solid var(--bd);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase}
@@ -68,7 +69,12 @@
         footer{border-top:1px solid var(--bd);padding:1.5rem 2rem;text-align:center;color:var(--txm);font-size:0.78rem}
         footer a{color:var(--cy);text-decoration:none}
         .psec{display:none}.psec.on{display:block}
-        @media(max-width:768px){.hero{grid-template-columns:1fr;padding:2.5rem 1.5rem;min-height:auto}.spanel{margin-top:1.5rem}.steps{grid-template-columns:1fr}.stats-in{grid-template-columns:1fr;gap:1.2rem}.tabs{gap:0}.tab{padding:0.6rem 0.7rem;font-size:0.72rem}}
+        .ipet-banner{max-width:900px;margin:0 auto;padding:0 2rem 2rem}
+        .ipet-box{background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(6,182,212,0.08));border:1.5px solid rgba(34,197,94,0.25);border-radius:16px;padding:1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+        .ipet-text{flex:1;min-width:250px}
+        .ipet-text h3{font-family:'Orbitron',sans-serif;font-size:0.95rem;color:var(--gr);margin-bottom:0.4rem}
+        .ipet-text p{font-size:0.82rem;color:var(--txm);line-height:1.5}
+        @media(max-width:768px){.hero{grid-template-columns:1fr;padding:2.5rem 1.5rem;min-height:auto}.spanel{margin-top:1.5rem}.steps{grid-template-columns:1fr}.stats-in{grid-template-columns:1fr;gap:1.2rem}.tabs{gap:0}.tab{padding:0.6rem 0.7rem;font-size:0.72rem}.ipet-box{flex-direction:column;text-align:center}}
     </style>
 </head>
 <body>
@@ -87,7 +93,11 @@
     <h1>System AI wspierający <span class="hcy">koncentrację</span> i <span class="hcy">regulację emocji</span> u dzieci ze SPE</h1>
     <p class="sub">Wdrażamy <strong>bezpieczne, offline środowisko Edge AI</strong> do szkół i ośrodków. Wspieramy naukę STEM i regulację emocji <strong>bez wysyłania danych dzieci do chmury</strong>.</p>
     <div class="badges"><span class="bg bg-g">Zgodność z RODO / AI Act</span><span class="bg bg-c">Panel Nauczyciela (IPET)</span><span class="bg bg-p">100% Offline</span></div>
-    <div class="ctas"><a href="pilot.html" class="btn btn-cy">Zgłoś szkołę do pilotażu</a><a href="https://ipet-generator-web.onrender.com" target="_blank" class="btn btn-o" style="border-color:var(--gr);color:var(--gr)">📄 Darmowy generator IPET/WOPFU</a><a href="#kontakt" class="btn btn-o" onclick="document.getElementById('email-box').style.display='block';return false;">Umów pokaz systemu</a></div>
+    <div class="ctas">
+        <a href="pilot.html" class="btn btn-cy">Zgłoś szkołę do pilotażu</a>
+        <a href="https://ipet-generator-web.onrender.com" target="_blank" class="btn btn-gr">📄 Darmowy generator IPET/WOPFU</a>
+        <a href="#kontakt" class="btn btn-o" onclick="document.getElementById('email-box').style.display='block';return false;">Umów pokaz systemu</a>
+    </div>
 </div><div class="spanel">
     <div class="sh"><span>Główne Moduły Copernix System</span><span class="son">OPERATIONAL</span></div>
     <div class="ml">
@@ -105,6 +115,16 @@
         <div class="step"><div class="sn">03</div><div class="si">&#128200;</div><h3 class="stt">Nauczyciel widzi postęp</h3><p class="sd">Panel AI Director pokazuje czas skupienia, ukończone misje i trendy. Dane nie opuszczają szkoły. Gotowe do wpisu w IPET.</p></div>
     </div>
 </section>
+<!-- IPET BANNER -->
+<div class="ipet-banner">
+    <div class="ipet-box">
+        <div class="ipet-text">
+            <h3>📄 Darmowy Generator IPET i WOPFU</h3>
+            <p>Wybierz trudności ucznia, kliknij gotowe frazy pedagogiczne, pobierz edytowalny plik Word w 30 sekund. Zgodny z Rozp. MEN 2017. Zero danych osobowych.</p>
+        </div>
+        <a href="https://ipet-generator-web.onrender.com" target="_blank" class="btn btn-gr" style="white-space:nowrap">Generuj za darmo &rarr;</a>
+    </div>
+</div>
 <!-- SECURITY SECTION -->
 <section class="sec" style="padding-top:2rem">
     <div style="background:var(--card);border:1px solid rgba(34,197,94,0.2);border-radius:18px;padding:2.5rem;max-width:900px;margin:0 auto">
@@ -120,12 +140,11 @@
             </div>
         </div>
         <div style="font-size:0.82rem;color:var(--txm);line-height:1.7">
-            <strong style="color:var(--tx)">Co to oznacza w praktyce:</strong> Żadne nagrania głosu ani dane o postępach dziecka nie opuszczają urządzenia szkoły. Pełna zgodność z RODO i AI Act. Dyrektor szkoły może pokazać rodzicom: „dane są tutaj, na tym komputerze, nigdzie nie wychodzą". Sovereign AI — europejskie dane, europejska kontrola.
+            <strong style="color:var(--tx)">Co to oznacza w praktyce:</strong> Żadne nagrania głosu ani dane o postępach dziecka nie opuszczają urządzenia szkoły. Pełna zgodność z RODO i AI Act. Dyrektor szkoły może pokazać rodzicom: &bdquo;dane są tutaj, na tym komputerze, nigdzie nie wychodzą&rdquo;. Sovereign AI — europejskie dane, europejska kontrola.
         </div>
     </div>
 </section>
 </div>
-
 <!-- RODZICE -->
 <div class="psec" id="tab-rodzice">
 <section class="hero"><div class="hero-text">
@@ -142,7 +161,6 @@
     </div>
 </div></section>
 </div>
-
 <!-- INWESTORZY -->
 <div class="psec" id="tab-inwestorzy">
 <section class="hero"><div class="hero-text">
@@ -160,35 +178,30 @@
     </div>
 </div></section>
 </div>
-
 <!-- STATS -->
 <div class="stats"><div class="stats-in">
     <div><div class="sv">181,6 tys.</div><div class="sl">Uczniów z orzeczeniami SPE w Polsce</div><div class="src">Dane GUS 2025</div></div>
     <div><div class="sv" style="color:var(--or)">+15,9 tys./rok</div><div class="sl">Wzrost liczby orzeczeń rok do roku</div><div class="src">Raport MEN 2023/2025</div></div>
     <div><div class="sv" style="color:var(--pu)">5-13%</div><div class="sl">Dzieci z trudnościami sensorycznymi</div><div class="src">Badania neuropsychiatryczne</div></div>
 </div></div>
-
 <!-- STORY -->
 <div class="story"><div class="story-in">
     <p class="sq">&bdquo;Mój syn jest bystry i kreatywny, ale szybko się nudzi, rozprasza i denerwuje przy zwykłych zadaniach szkolnych. Standardowe narzędzia do niego nie trafiają. Zacząłem budować takie, które trafiają &mdash; przez kosmos, gry i AI, które nadążają za jego tempem.&rdquo;</p>
     <p class="sa">&mdash; Piotr Brodziński, CTO &middot; NeuroEduLabs, Olsztyn</p>
 </div></div>
-
 <!-- PILOT -->
 <div class="pilot"><div class="pbox">
     <h2>Zgłoś szkołę do bezpłatnego pilotażu</h2>
     <p>Szukamy 10 szkół i ośrodków z Warmii i Mazur do testowania Copernix System. Bezpłatnie. Bez zobowiązań. Z pełnym wsparciem technicznym.</p>
     <a href="pilot.html" class="btn btn-cy" style="font-size:1.05rem;padding:0.9rem 2.5rem">Zgłoś szkołę (Wolne miejsca: 10)</a>
 </div></div>
-
-<!-- EMAIL BOX (CF-safe, no mailto in HTML) -->
+<!-- EMAIL BOX (CF-safe) -->
 <div id="email-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#0f172a;border:2px solid var(--cy);border-radius:20px;padding:2.5rem;z-index:999;text-align:center;box-shadow:0 0 80px rgba(6,182,212,0.15)">
     <h3 style="color:var(--cy);margin-bottom:1rem;font-family:'Orbitron',sans-serif;font-size:1.1rem">Kontakt</h3>
     <p style="color:var(--txm);margin-bottom:1.5rem;font-size:0.9rem">Napisz do nas:</p>
     <p style="font-size:1.1rem;font-weight:700;color:var(--tx)" id="em"></p>
     <button onclick="document.getElementById('email-box').style.display='none'" style="margin-top:1.5rem;background:var(--bd);color:var(--tx);border:none;padding:0.6rem 1.5rem;border-radius:8px;cursor:pointer;font-family:'Rajdhani';font-weight:600">Zamknij</button>
 </div>
-
 <!-- NOTA PRAWNA -->
 <div style="max-width:800px;margin:0 auto;padding:0 2rem 2rem">
     <div style="padding:1.5rem;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:12px;font-size:0.75rem;color:var(--txm);line-height:1.7">
@@ -200,13 +213,9 @@
         System Copernix działa w architekturze Edge AI (offline-first). Dane użytkowników nie są przesyłane do zewnętrznych usług chmurowych — przetwarzanie odbywa się lokalnie. Privacy by Design zgodnie z art. 25 RODO. Podstawa prawna przetwarzania: art. 6 ust. 1 lit. b RODO (wykonanie umowy/pilotażu) oraz art. 8 RODO w zakresie danych dzieci.
     </div>
 </div>
-
 <footer><p>&copy; 2026 NeuroEduLabs &middot; Olsztyn, Polska &middot; <span id="fe" style="color:var(--cy);cursor:pointer" onclick="document.getElementById('email-box').style.display='block'"></span></p></footer>
-
 <script>
-// CF-safe email rendering
 (function(){var u='piotr-lunaminicoach';var d='proton.me';var e=u+'@'+d;document.getElementById('em').textContent=e;document.getElementById('fe').textContent=e;var n=document.getElementById('em-nota');if(n)n.textContent=e;})();
-// Tab switching
 document.querySelectorAll('.tab').forEach(function(t){
     t.addEventListener('click',function(){
         document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});
