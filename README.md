@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Copernix OS · NeuroEduLabs · TRL 7 Demo</title>
+  <title>Copernix OS · NeuroEduLabs · TRL 6 Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Copernix OS – lokalny system Edge AI do wsparcia dzieci ze SPE. Demo TRL 7 NeuroEduLabs.">
   <style>
